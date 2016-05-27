@@ -20,7 +20,7 @@ File.write('output/css/style.css', Sass::Engine.new(File.read('sass/style.sass')
 File.write('output/index.html', Slim::Template.new{File.read('slim/index.slim')}.render)
 
 #Merge JS
-script = File.read("js/helper.js") +
+script = File.read("js/helper.js")+
   File.read("js/markdown.js")+
   File.read("js/markdown_html.js")+
   File.read("js/markdown_tex.js")+
@@ -28,3 +28,6 @@ script = File.read("js/helper.js") +
 
 #Compress JS
 File.write('output/js/script.js', Uglifier.new.compile(script))
+
+#Clean JS
+#File.write('output/js/script.js', script)

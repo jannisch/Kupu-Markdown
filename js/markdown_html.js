@@ -23,6 +23,15 @@ function parse(md){
     line = line.replaceAll(regex_emph,"<i>$1</i>");
     line = line.replaceAll(regex_inline_code,"<code>$1</code>");
 
+    //advanced hyperlink
+    line = line.replaceAll(regex_hyperlink_ext,"<a href='$4'>$2</a>");
+
+    //simple hyperlink
+    line = line.replaceAll(regex_hyperlink," <a href='$1$2'>$1$2</a> ");
+
+    //New line
+    line = line.replaceAll(regex_linebreak,"<br />");
+
     //sub-list
     if (regex_sublist.test(line)) {
       if (!sub_list_active){
