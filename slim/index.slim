@@ -1,0 +1,41 @@
+html
+  head
+    link rel="stylesheet" href="css/codemirror.css"
+    link rel="stylesheet" href="css/style.css"
+    script src="js/codemirror.js"
+    script src="js/vue.min.js"
+    script src="js/script.js"
+  body
+    #section-topbar
+      #title Kupu Beta
+      a#menu-button v-on:mousedown="menu" &#9776;
+
+    #section-menu v-show="show_menu"
+      a.menu-item Save
+      a.menu-item Share
+      a.menu-item v-on:click="download_md" Download .md
+      a.menu-item v-on:click="download_tex" Download .tex
+      a.menu-item v-on:click="download_tex_snippet" Download .tex (Snippet)
+      a.menu-item v-on:click="download_html" Download .html
+      a.menu-item v-on:click="about" About
+    textarea#section-editor
+
+    #section-preview
+
+    #about-screen v-show="show_about"
+      p Developed 2016 by Matthias Rupp
+      b Used technologies:
+      ul
+        li
+          a.about-link href="https://codemirror.net/" Codemirror
+        li
+          a.about-link href="http://vuejs.org/" Vue.js
+        li
+          a.about-link href="http://sass-lang.com/" Sass
+        li
+          a.about-link href="http://slim-lang.com/" Slim
+        li
+          a.about-link href="https://github.com/lautis/uglifier" UglifyJS
+      br
+      br
+      a.close-button v-on:click="hide_about" Close
