@@ -83,17 +83,15 @@ h4
   left: 0px
   top: $top-height
   width: 50%
-  height: 100%
-  display: block
   border-right: 1px solid $border-color
   z-index: 0
   bottom: 0px
+  overflow: scroll
 
 #section-preview
   position: fixed
   left: 50%
   width: 50%
-  height: 100%
   overflow: scroll
   top: $top-height
   padding: 20px
@@ -114,6 +112,20 @@ h4
   padding: 20px
   font-family: "Roboto"
   font-weight: 100
+
+
+@media print
+  #section-preview
+    position: absolute
+    left: 0
+    width: 100%
+    top: 0px
+    padding: 20px
+    font-family: "Roboto"
+    z-index: 2
+    background-color: white
+    overflow: visible
+
 
 .about-link
   text-decoration: underline

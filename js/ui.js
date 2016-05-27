@@ -7,7 +7,7 @@ document.onreadystatechange = function () {
     styleActiveLine: true,
     matchBrackets: true
   });
-  
+
   var output = document.getElementById("section-preview");
 
   editor.on("change", function () {
@@ -53,6 +53,10 @@ document.onreadystatechange = function () {
         var doc = "";
         doc += parse_tex(editor.getValue());
         download('markdown_snippet.tex',doc);
+        this.show_menu = false;
+      },
+      print: function () {
+        window.print();
         this.show_menu = false;
       }
     }

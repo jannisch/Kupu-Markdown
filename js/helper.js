@@ -1,16 +1,16 @@
 String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search), replacement);
+  var target = this;
+  return target.replace(new RegExp(search), replacement);
 };
 
 String.prototype.escapeHtml = function() {
-    var target = this;
-    return target
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
+  var target = this;
+  return target
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;")
+  .replace(/'/g, "&#039;");
 };
 
 function download(filename, text) {
