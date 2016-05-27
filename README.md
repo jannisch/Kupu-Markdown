@@ -1,7 +1,7 @@
 # Kupu-Markdown
 
 Kupu is a fast and easy to use online markdown-editor.
-
+[See Kupu in action](https://kupu.matthi.net "Kupu")
 ## Features
 
 * Export as MD, HTML and TeX
