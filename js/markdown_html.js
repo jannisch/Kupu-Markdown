@@ -5,11 +5,14 @@ function parse(md){
   var lines = md.split("\n");
   var newline=""
 
+
   //states
   var list_active = false;
   var sub_list_active = false;
   var ordered_list_active = false;
   var code_active = false;
+
+  var empty_line = false;
 
   for (var i = 0; i < lines.length; i++){
     var line = lines[i].escapeHtml();
@@ -17,6 +20,9 @@ function parse(md){
     if (i < lines.length - 1){
       next_line = lines[i+1].escapeHtml();
     }
+
+    empty_line = (line =="");
+
     //bold and italic
     line = line.replaceAll(regex_bold_emph,"<b><i>$1</i></b>");
     line = line.replaceAll(regex_bold,"<b>$1</b>");
@@ -29,8 +35,18 @@ function parse(md){
     //simple hyperlink
     line = line.replaceAll(regex_hyperlink," <a href='$1$2'>$1$2</a> ");
 
+    //quote
+    line = line.replaceAll(regex_quote,"<blockquote>$1</blockquote>");
+
+    //Headlines
+    line = line.replaceAll(regex_headline_4,"<h4>$1</h4>");
+    line = line.replaceAll(regex_headline_3,"<h3>$1</h3>");
+    line = line.replaceAll(regex_headline_2,"<h2>$1</h2>");
+    line = line.replaceAll(regex_headline_1,"<h1>$1</h1>");
+
     //New line
     line = line.replaceAll(regex_linebreak,"<br />");
+    line = line.replaceAll(regex_linebreak_2,"<br />");
 
     //sub-list
     if (regex_sublist.test(line)) {
@@ -67,12 +83,12 @@ function parse(md){
       line = line.replace(regex_ol_removal,"");
       output += "<li>" + line + "</li>" + "\n";
       continue;
-    }else if(ordered_list_active){
-      output += "<ol>" + "\n";
+    }else if(ordered_list_active && !regex_line_indent.test(line) && !empty_line){
+      output += "</ol>" + "\n";
       ordered_list_active = false;
     }
 
-    //headline 1 ===== style
+    //Headlines (------ style)
     if (regex_headline_1s.test(next_line)){
       output += "<h1>" + line + "</h1>" + "\n";
       continue;
@@ -80,7 +96,6 @@ function parse(md){
     if (regex_headline_1s.test(line)){
       continue;
     }
-    //headline 1 ----- style
     if (regex_headline_2s.test(next_line)){
       output += "<h2>" + line + "</h2>" + "\n";
       continue;
@@ -92,7 +107,7 @@ function parse(md){
     //code
     if (regex_code.test(line)) {
       if (!code_active){
-        output += "<pre><code>" + "\n";
+        output += "<pre><code>";
         code_active = true;
       }
       output += line.substring(4,line.length) + "\n";
@@ -102,32 +117,7 @@ function parse(md){
       code_active = false;
     }
 
-    //quote
-    if (regex_quote.test(line)) {
-      output += "<blockquote>" + line.substring(5, line.length) + "</blockquote>" + "\n";
-      continue;
-    }
 
-    //headline 4
-    if (regex_headline_4.test(line)) {
-      output += "<h4>" + line.substring(5, line.length) + "</h4>" + "\n";
-      continue;
-    }
-    //headline 3
-    if (regex_headline_3.test(line)) {
-      output += "<h3>" + line.substring(4, line.length) + "</h3>" + "\n";
-      continue;
-    }
-    //headline 2
-    if (regex_headline_2.test(line)) {
-      output += "<h2>" + line.substring(3, line.length) + "</h2>" + "\n";
-      continue;
-    }
-    //headline 1
-    if (regex_headline_1.test(line)) {
-      output += "<h1>" + line.substring(2, line.length) + "</h1>" + "\n";
-      continue;
-    }
 
     if (line != "" && line != "\n"){
       output += line + "\n";
