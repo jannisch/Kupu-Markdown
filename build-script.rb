@@ -1,6 +1,6 @@
 require 'slim'
 require 'sass'
-require 'uglifier'
+require 'net/http'
 
 sass_options = {
   cache: true,
@@ -27,8 +27,10 @@ script = File.read("js/helper.js")+
   File.read("js/markdown_tex.js")+
   File.read("js/ui.js")
 
-#Compress JS
-File.write('output/js/script.js', Uglifier.new.compile(script))
+# Minify and save JS
+uri = URI('https://marijnhaverbeke.nl/uglifyjs')
+minified = Net::HTTP.post_form(uri, 'js_code' => script).body
+File.write('output/js/script.js', minified)
 
 #Clean JS
 #File.write('output/js/script.js', script)
