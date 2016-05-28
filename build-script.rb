@@ -15,6 +15,7 @@ FileUtils.copy_file("extern/js/codemirror.js","output/js/codemirror.js")
 
 #Render Sass
 File.write('output/css/style.css', Sass::Engine.new(File.read('sass/style.sass'), sass_options).render)
+File.write('output/css/render_style.css', Sass::Engine.new(File.read('sass/render_style.sass'), sass_options).render)
 
 #Render Slim
 File.write('output/index.html', Slim::Template.new{File.read('slim/index.slim')}.render)
